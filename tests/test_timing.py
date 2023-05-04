@@ -1,5 +1,6 @@
-from litestar import Request, get
-from litestar.status_codes import HTTP_200_OK
+from unittest.mock import MagicMock
+
+from litestar import get
 from litestar.testing import create_test_client
 
 from litestar_utils import create_timing_middleware
@@ -15,45 +16,64 @@ async def second_path() -> str:
     return "Ok!"
 
 
-def emitter(request, timing):
-    assert type(request) == Request
-    assert type(timing) == float
-
-
-def not_call_emitter(_request, _timing):
-    assert True is False
+@get("/third_path")
+async def third_path() -> str:
+    return "Ok!"
 
 
 def test_path():
+    emitter = MagicMock()
     with create_test_client(
         route_handlers=[first_path],
         middleware=[create_timing_middleware(emit=emitter)],
     ) as client:
-        response = client.get("/first_path")
-        assert response.status_code == HTTP_200_OK
-        assert response.text == "Ok!"
+        _response = client.get("/first_path")
+        emitter.assert_called_once()
 
 
-def test_exclude_root_path():
+def test_exclude_one_path():
+    emitter = MagicMock()
     with create_test_client(
-        route_handlers=[first_path],
+        route_handlers=[first_path, third_path],
         middleware=[
             create_timing_middleware(
-                emit=not_call_emitter,
-                exclude=["first_path"],
+                emit=emitter,
+                exclude="/first_path",
             )
         ],
     ) as client:
-        response = client.get("/first_path")
-        assert response.status_code == HTTP_200_OK
-        assert response.text == "Ok!"
+        _response = client.get("/first_path")
+        emitter.assert_not_called()
+        _response = client.get("/third_path")
+        emitter.assert_called_once()
 
 
-def test_exclude_path():
+def test_exclude_multiple_paths():
+    emitter = MagicMock()
     with create_test_client(
-        route_handlers=[second_path],
-        middleware=[create_timing_middleware(emit=not_call_emitter)],
+        route_handlers=[first_path, third_path],
+        middleware=[
+            create_timing_middleware(
+                emit=emitter,
+                exclude=["/first_path", "/third_path"],
+            )
+        ],
     ) as client:
-        response = client.get("/second_path")
-        assert response.status_code == HTTP_200_OK
-        assert response.text == "Ok!"
+        _response = client.get("/first_path")
+        emitter.assert_not_called()
+        _response = client.get("/third_path")
+        emitter.assert_not_called()
+
+
+def test_exclude_timing():
+    emitter = MagicMock()
+    with create_test_client(
+        route_handlers=[first_path, second_path, third_path],
+        middleware=[create_timing_middleware(emit=emitter)],
+    ) as client:
+        _response = client.get("/second_path")
+        emitter.assert_not_called()
+        _response = client.get("/first_path")
+        emitter.assert_called_once()
+        _response = client.get("/third_path")
+        assert emitter.call_count == 2
