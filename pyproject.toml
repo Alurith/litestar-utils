@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "litestar-utils"
-version = "0.1.0"
-description = ""
+version = "0.1.1"
+description = "Utilities for the Litestar framework."
 authors = ["Alessandro Ferrini <alessandro.ferrini@apptecsrl.com>"]
 readme = "README.md"
 packages = [{include = "litestar_utils"}]
