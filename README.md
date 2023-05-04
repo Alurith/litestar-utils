@@ -2,6 +2,8 @@
 
 Utilities for the [Litestar framework](https://github.com/litestar-org/litestar).
 
+**Source Code**: [https://github.com/Alurith/litestar-utils](https://github.com/Alurith/litestar-utils)
+
 ---
 ## Features: 
 This package include some utilities I generaly use in my projects:
