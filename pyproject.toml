@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "litestar-utils"
+version = "0.1.0"
+description = ""
+authors = ["Alessandro Ferrini <alessandro.ferrini@apptecsrl.com>"]
+readme = "README.md"
+packages = [{include = "litestar_utils"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+litestar = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "*"
+black = "*"
+mypy = "*"
+isort = "*"
+pytest = "*"
+coverage = "*"
+pytest-cov = "*"
+pytest-asyncio = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
