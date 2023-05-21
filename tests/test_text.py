@@ -1,4 +1,4 @@
-from litestar_utils import slugify, SlugifyOptions
+from litestar_utils import SlugifyOptions, slugify
 
 
 def test_slugify():

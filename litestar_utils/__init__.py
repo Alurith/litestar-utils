@@ -1,5 +1,5 @@
+from litestar_utils.text import SlugifyOptions, slugify
 from litestar_utils.timing import create_timing_middleware
-from litestar_utils.text import slugify, SlugifyOptions
 
 __author__ = "Alessandro Ferrini"
 
