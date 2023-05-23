@@ -11,8 +11,9 @@ if TYPE_CHECKING:
 
 class HTTPSRedirectMiddleware(AbstractMiddleware):
     """
-    ported from starlette: https://www.starlette.io/middleware/#httpsredirectmiddleware
+    Redirect incoming requests from `http` or `ws` to `https` or `wss`.
 
+    Ported from starlette: https://www.starlette.io/middleware/#httpsredirectmiddleware
     """
 
     def __init__(self, app: "ASGIApp") -> None:
