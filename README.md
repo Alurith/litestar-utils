@@ -9,6 +9,7 @@ Utilities for the [Litestar framework](https://github.com/litestar-org/litestar)
 This package include some utilities I generaly use in my projects:
 - **Timing Middleware**: Basic timing for each request
 - **Slugify**: Basic slugify function with customizable options 
+- **HTTPS Redirect Middleware**: Redirect all the incoming requests from `http` or `ws` to `https` or `wss`.  
 
 ---
 ## Installation: 
