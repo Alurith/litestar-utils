@@ -1,3 +1,4 @@
+from litestar_utils.https_redirect import HTTPSRedirectMiddleware
 from litestar_utils.text import SlugifyOptions, slugify
 from litestar_utils.timing import create_timing_middleware
 
@@ -9,4 +10,9 @@ credits = [
     "Alessandro Ferrini",
 ]
 
-__all__ = ["create_timing_middleware", "slugify", "SlugifyOptions"]
+__all__ = [
+    "create_timing_middleware",
+    "slugify",
+    "SlugifyOptions",
+    "HTTPSRedirectMiddleware",
+]

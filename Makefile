@@ -3,7 +3,7 @@ tests_src = tests
 examples_src = examples
 all_src = $(pkg_src) $(tests_src) $(examples_src)
 
-mypy_base = mypy --show-error-codes
+mypy_base = mypy --show-error-codes --explicit-package-bases
 mypy = $(mypy_base) $(all_src)
 test = pytest $(tests_src) --cov=litestar_utils
 

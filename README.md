@@ -101,3 +101,27 @@ options = SlugifyOptions(replacements=[("@", "at"), [".", "dot"]])
 assert slugify(input_string, options=options) == expected
 
 ```
+### HTTPS Redirect Middleware:
+Use the `HTTPSRedirectMiddleware` middleware to redirect all the incoming requests from `http` or `ws` to `https` or `wss`.
+
+Ported from [starlette HTTPSRedirectMiddleware](https://www.starlette.io/middleware/#httpsredirectmiddleware)
+
+```python
+from litestar import Litestar, get
+from litestar_utils import HTTPSRedirectMiddleware
+
+
+@get("/")
+async def hello_world() -> str:
+    return "Hello, world!"
+
+
+@get("/base", exclude_timing=True)
+async def base_all() -> str:
+    return "All your base are belong to us"
+
+app = Litestar(
+    [hello_world, base_all],
+    middleware=[HTTPSRedirectMiddleware],
+)
+```
